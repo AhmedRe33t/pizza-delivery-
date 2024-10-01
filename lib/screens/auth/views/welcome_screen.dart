@@ -3,7 +3,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pizza/bloc/AuthanticationBloc/authantication_bloc_bloc.dart';
-import 'package:pizza/screens/auth/blocs/sign_in_bloc.dart';
+import 'package:pizza/screens/auth/blocs/sign_in_bloc/sign_in_bloc.dart';
+import 'package:pizza/screens/auth/blocs/sign_up_bloc/sign_up_bloc.dart';
 import 'package:pizza/screens/auth/views/sign_in_screen.dart';
 import 'package:pizza/screens/auth/views/sign_up_screen.dart';
 
@@ -95,13 +96,13 @@ super.initState();
                         children: [
                           BlocProvider<SignInBloc>(
                             create:(context) => SignInBloc(
-                              userRepository:context.read<AuthanticationBloc>().userRepository
+                              context.read<AuthanticationBloc>().userRepository
                             ),
                             child: SignInScreen(),),
 
                              BlocProvider<SignUpBloc>(
                             create:(context) => SignUpBloc(
-                              userRepository:context.read<AuthanticationBloc>().userRepository
+                              context.read<AuthanticationBloc>().userRepository
                             ),
                             child: SignUpScreen(),),
                         ])

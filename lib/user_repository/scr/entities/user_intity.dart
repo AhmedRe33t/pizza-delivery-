@@ -2,7 +2,6 @@ class MyUserEntity{
   String userId;
   String name;
   String email;
-  
   bool hasActiveCart;
   
   MyUserEntity({

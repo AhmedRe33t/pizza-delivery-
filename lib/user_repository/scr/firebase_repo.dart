@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:pizza/user_repository/scr/entities/user_intity.dart';
 import 'package:pizza/user_repository/scr/models/user.dart';
 import 'package:pizza/user_repository/scr/user_repo.dart';
-
+import 'package:rxdart/rxdart.dart';
 class FirebaseRepository implements UserRepository{
 
 
@@ -12,6 +13,32 @@ class FirebaseRepository implements UserRepository{
   final usersCollection = FirebaseFirestore.instance.collection('users');
 
   FirebaseRepository({FirebaseAuth? firebaseAuth }) :_firebaseAuth=firebaseAuth??FirebaseAuth.instance;
+
+
+
+  @override
+  Stream<MyUser?> get user {
+    return _firebaseAuth.authStateChanges().flatMap((firebaseUser)async*{
+     if(firebaseUser==null){
+       yield MyUser.empty;
+     }else{
+      yield await usersCollection.doc(firebaseUser.uid).get().then((value)=>MyUser.fromEntity(MyUserEntity.fromDocument(value.data()!)));
+     }
+    });
+  }
+
+
+   @override
+  Future<void> signIn(String email, String password) {
+   try
+  }
+
+  @override
+  Future<MyUser?> signUp(MyUser myUser, String password) {
+    // TODO: implement signUp
+    throw UnimplementedError();
+  }
+
 
   @override
   Future<void> logOut() {
@@ -25,20 +52,7 @@ class FirebaseRepository implements UserRepository{
     throw UnimplementedError();
   }
 
-  @override
-  Future<void> signIn(String email, String password) {
-    // TODO: implement signIn
-    throw UnimplementedError();
-  }
+ 
 
-  @override
-  Future<MyUser?> signUp(MyUser myUser, String password) {
-    // TODO: implement signUp
-    throw UnimplementedError();
-  }
-
-  @override
-  // TODO: implement user
-  Stream<MyUser?> get user => throw UnimplementedError();
  
 }

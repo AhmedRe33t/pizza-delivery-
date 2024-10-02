@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pizza/componant/macro.dart';
 import 'package:pizza/constants/assets.dart';
+import 'package:pizza/pizza_repository/scr/models/pizza_model.dart';
 
 
 class DetailsScreen extends StatelessWidget {
-  const DetailsScreen({super.key});
-
+  const DetailsScreen({super.key, required this.pizza});
+  final Pizza pizza;
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -32,7 +33,7 @@ class DetailsScreen extends StatelessWidget {
                     blurRadius: 10
                   )
                 ],
-                image: DecorationImage(image: AssetImage(Assets.images4))
+                image: DecorationImage(image: NetworkImage(pizza.picture))
 
               ),
             ),
@@ -56,12 +57,12 @@ class DetailsScreen extends StatelessWidget {
                     padding: const EdgeInsets.all(20.0),
                     child:   Column(
                       children: [
-                      const Row(
+                       Row(
                           children: [
                             Expanded(
                               flex: 2,
-                              child: Text('Truffle Temptation Extravaganza',
-                              style: TextStyle(
+                              child: Text(pizza.name,
+                              style: const TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold
                               ),),
@@ -72,15 +73,15 @@ class DetailsScreen extends StatelessWidget {
                                 alignment: Alignment.centerRight,
                                 child: Column(
                                   children: [
-                                    Text('10.00\$',
-                                    style: TextStyle(
+                                    Text("\$${pizza.price - (pizza.price * (pizza.discount) / 100)}",
+                                    style: const TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
                                        color:  Color.fromARGB(255, 8, 126, 210),
                                     ),),
-                                      Text('15.00\$',
+                                      Text('${pizza.price}.00\$',
                                      
-                                         style: TextStyle(
+                                         style: const TextStyle(
                                           decoration: TextDecoration.lineThrough,
                           fontWeight: FontWeight.w700,
                           color:  Colors.grey,
@@ -96,15 +97,15 @@ class DetailsScreen extends StatelessWidget {
                           ],
                         ),
                        const SizedBox(height: 12,),
-                        const Row(
+                         Row(
                           children: [
-                             MyMacroWidget(title: 'Calories', value: 233, icon: FontAwesomeIcons.fire,),
+                             MyMacroWidget(title: 'Calories', value: pizza.macros.calories, icon: FontAwesomeIcons.fire,),
                               SizedBox(width: 10,),
-                           MyMacroWidget(title:'Protein', value: 233, icon: FontAwesomeIcons.dumbbell),
+                           MyMacroWidget(title:'Protein', value: pizza.macros.proteins, icon: FontAwesomeIcons.dumbbell),
                               SizedBox(width: 10,),
-                              MyMacroWidget(title: 'Fat', value: 233, icon: FontAwesomeIcons.bowlFood,),
+                              MyMacroWidget(title: 'Fat', value: pizza.macros.fat, icon: FontAwesomeIcons.bowlFood,),
                            SizedBox(width: 10,),
-                               MyMacroWidget(title: 'Carbs', value: 233, icon: CupertinoIcons.chart_bar_fill,),
+                               MyMacroWidget(title: 'Carbs', value: pizza.macros.carbs, icon: CupertinoIcons.chart_bar_fill,),
                           ],
                         ),
 

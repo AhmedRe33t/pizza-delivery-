@@ -1,3 +1,4 @@
+
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -30,7 +31,7 @@ super.initState();
  @override
   Widget build(BuildContext context) {
     return  Scaffold(
-  backgroundColor: Theme.of(context).colorScheme.background,
+  backgroundColor: const Color.fromARGB(255, 245, 241, 241),
   body: SingleChildScrollView(
     child: SizedBox(
       height: MediaQuery.of(context).size.height,
@@ -41,9 +42,9 @@ super.initState();
             child: Container(
               height: MediaQuery.of(context).size.width,
               width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 shape: BoxShape.circle,
-                color: Theme.of(context).colorScheme.tertiary
+                color: Colors.tealAccent
               ),
             ),
           ),
@@ -52,28 +53,28 @@ super.initState();
             child: Container(
               height: MediaQuery.of(context).size.width/1.3,
               width: MediaQuery.of(context).size.width/1.3,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 shape: BoxShape.circle,
-                color: Theme.of(context).colorScheme.primary
+                color: Colors.blue
               ),
             ),
           ),
           BackdropFilter(
-            filter:ImageFilter.blur(sigmaX: 100,sigmaY: 100),
+            filter:ImageFilter.blur(sigmaX: 100.0,sigmaY: 100.0),
             child: Container(),
             ),
             Align(
             alignment: Alignment.center,
             child: Container(
-              height: MediaQuery.of(context).size.width/1.8,
+              height: MediaQuery.of(context).size.height/1.8,
              
              child: Column(
               children: [
-                Padding(padding: EdgeInsets.symmetric(horizontal: 50),
+                Padding(padding:const EdgeInsets.symmetric(horizontal: 50),
                 child: TabBar(
                   controller: tabController,
                  unselectedLabelColor: Theme.of (context) .colorScheme.onPrimary,
-                 labelColor: Theme.of (context). colorScheme.onBackground,
+                 labelColor: Colors.black,
                   tabs: const[
                     Padding(padding:EdgeInsets.all(12),
                     child: Text('SignIn',
@@ -98,13 +99,13 @@ super.initState();
                             create:(context) => SignInBloc(
                               context.read<AuthanticationBloc>().userRepository
                             ),
-                            child: SignInScreen(),),
+                            child:const SignInScreen(),),
 
                              BlocProvider<SignUpBloc>(
                             create:(context) => SignUpBloc(
                               context.read<AuthanticationBloc>().userRepository
                             ),
-                            child: SignUpScreen(),),
+                            child: const SignUpScreen(),),
                         ])
                       
                       )

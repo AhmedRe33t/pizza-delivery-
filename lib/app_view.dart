@@ -1,6 +1,10 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pizza/bloc/AuthanticationBloc/authantication_bloc_bloc.dart';
+import 'package:pizza/screens/auth/blocs/sign_in_bloc/sign_in_bloc.dart';
+
 
 import 'screens/auth/views/welcome_screen.dart';
 import 'screens/home/views/home_screen.dart';
@@ -10,25 +14,33 @@ class MyAppView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Food delivary',
-      theme: ThemeData(
-        colorScheme: ColorScheme.light(
-          background: Colors.grey.shade100,
-          onBackground: Colors.black,
-          primary: Colors.blue,
-          onPrimary: Colors.white,
-        )
-       ),
-       home: BlocBuilder<AuthanticationBloc,AuthenticationState>(
-        builder:(context, state) {
-          if(state.status==AuthenticationStatus.authentIcated){
-            return const HomeScreen();
-          }else {
-            return const WelcomeScreen();
-          }
-        },),
-    );
+    return MaterialApp(
+        title: 'Pizza Delivery',
+        debugShowCheckedModeBanner: false,
+        // theme: ThemeData(colorScheme: ColorScheme.light(
+        //   //background: Colors.grey.shade200,
+        //  // onBackground: Colors.black,
+        //    primary: Colors.blue, onPrimary: Colors.white)),
+        home: BlocBuilder<AuthanticationBloc, AuthenticationState>(
+          builder: ((context, state) {
+            if (state.status == AuthenticationStatus.authentIcated) {
+              return MultiBlocProvider(
+                providers: [
+                  BlocProvider(
+                    create: (context) => SignInBloc(context.read<AuthanticationBloc>().userRepository),
+                  ),
+                  // BlocProvider(
+                  //   create: (context) => GetPizzaBloc(
+                  //     FirebasePizzaRepo()
+                  //   )..add(GetPizza()),
+                  // ),
+                ],
+                child: const HomeScreen(),
+              );
+            } else {
+              return const WelcomeScreen();
+            }
+          }),
+        ));
   }
 }

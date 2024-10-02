@@ -41,10 +41,10 @@ class FirebaseRepository implements UserRepository{
   }
 
   @override
-  Future<MyUser?> signUp(MyUser myUser, String password)async {
+  Future<MyUser> signUp(MyUser myUser, String password)async {
      
      try {
-  UserCredential user =await _firebaseAuth.createUserWithEmailAndPassword(email:myUser.email , password: password);
+  UserCredential user =await FirebaseAuth.instance.createUserWithEmailAndPassword(email:myUser.email , password: password);
   myUser.userId=user.user!.uid;
   return myUser;
 }  catch (e) {
